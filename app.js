@@ -1,5 +1,7 @@
 const userButtons = document.querySelectorAll(".user-select button");
 const playButton = document.querySelector(".play");
+const tryAgain = document.querySelector(".play.none");
+const res = document.querySelector(".res");
 
 let selectedButton = null;
 
@@ -42,6 +44,10 @@ userButtons.forEach((button) => {
     }
   });
 });
+
+// ... (kodunuzun geri kalanı)
+
+// ... (kodunuzun başlangıcı)
 
 let remainingAttempts = 1;
 
@@ -116,30 +122,78 @@ playButton.addEventListener("click", () => {
       ) + 1;
 
     if (userBoxIndex === botBoxIndex) {
-      alert("Oyun Durduruldu! Kutular eşleşti.");
-      setTimeout(() => {
-        const moneyElements = document.querySelectorAll(".money");
-        moneyElements.forEach((element) => {
-          element.remove();
-        });
-        remainingAttempts = 1;
-      }, 1000);
+      tryAgain.classList.remove("none");
+      playButton.classList.add("none");
+      res.innerText = "You Win";
+      res.classList.add("win");
+      res.classList.remove("lose"); // Eğer önceki durum "You Lose" ise bu class'ı kaldır
     } else {
-      alert("Oyun Bitti! Bir saniye içinde baştan başlıyoruz.");
-      setTimeout(() => {
-        const moneyElements = document.querySelectorAll(".money");
-        moneyElements.forEach((element) => {
-          element.remove();
-        });
-        remainingAttempts = 1;
-      }, 1000);
+      tryAgain.classList.remove("none");
+      playButton.classList.add("none");
+      res.innerText = "You Lose";
+      res.classList.add("lose");
+      res.classList.remove("win"); // Eğer önceki durum "You Win" ise bu class'ı kaldır
     }
   }
 });
+
+// ... (kodunuzun geri kalanı)
 
 const botButtons = document.querySelectorAll(".user-select.bot button");
 botButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
     event.preventDefault(); // Bot butonlarına tıklamayı engelliyor
   });
+});
+
+let userCanPlay = true; // Kullanıcının oynama yetkisi
+
+playButton.addEventListener("click", () => {
+  if (userCanPlay) {
+    const userSelectedButton = document.querySelector(
+      ".user-select button.selected"
+    );
+    if (!userSelectedButton) {
+      alert("Bir kutu seçiniz!");
+      return;
+    }
+
+    // ... Oyun devam ederse gerçekleşen işlemler
+
+    userCanPlay = false; // Oyun bittiğinde kullanıcının oynama yetkisini kapat
+  } else {
+    // Kullanıcı tekrar oynamak istediğinde
+    userButtons.forEach((button) => {
+      button.classList.remove("selected");
+      button.innerHTML = "";
+    });
+
+    botButtons.forEach((button) => {
+      button.classList.remove("selected");
+      button.innerHTML = "";
+    });
+
+    userCanPlay = true; // Kullanıcının tekrar oynamaya yetkisi açık
+  }
+});
+
+tryAgain.addEventListener("click", () => {
+  tryAgain.classList.add("none"); // "Try Again" butonunu gizle
+
+  // Oyunu baştan başlatmak için gerekli işlemler burada yapılacak
+  userButtons.forEach((button) => {
+    button.classList.remove("selected");
+    button.innerHTML = "";
+  });
+
+  botButtons.forEach((button) => {
+    button.classList.remove("selected");
+    button.innerHTML = "";
+  });
+
+  userCanPlay = true; // Kullanıcının tekrar oynamaya yetkisi açık
+  playButton.classList.remove("none"); // "Play" butonunu görünür yap
+  res.innerText = ""; // Sonucu temizle
+  res.classList.remove("win");
+  res.classList.remove("lose");
 });

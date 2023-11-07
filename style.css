@@ -23,6 +23,7 @@ nav {
 li {
   list-style-type: none;
   font-weight: 700;
+  font-size: 0.9rem;
   transition: color 0.3s, transform 0.3s;
   border-bottom: 2px solid transparent;
 }
@@ -68,8 +69,30 @@ ul {
   border: 2px solid #12a99d;
 }
 
+.none {
+  display: none;
+}
+
 .money {
   background-color: transparent;
+}
+
+.win {
+  background-color: greenyellow;
+}
+
+.lose {
+  background-color: red;
+  color: white;
+}
+
+.res {
+  text-align: center;
+  font-weight: 700;
+  font-style: italic;
+  width: fit-content;
+  padding: 0.4rem 1rem;
+  border-radius: 0.3rem;
 }
 
 .play {
@@ -80,7 +103,10 @@ ul {
 }
 
 .play-div {
-  margin: 2rem;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  margin: 3rem auto;
 }
 
 .play:hover {
@@ -91,6 +117,7 @@ ul {
 
 main {
   display: flex;
-  width: 900px;
+  width: 1000px;
   margin-top: 4rem;
+  padding: 2rem;
 }
